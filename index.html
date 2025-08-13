@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -123,159 +84,159 @@
 </head>
 <body>
   <audio id="bgMusic" loop autoplay>
-    <source src="https://github.com/docaiduc/school-memories/blob/c42621daa1240f005a213321d9554ba7d446fce3/upbeat_music.mp3" type="audio/mp3">
+    <source src="upbeat_music.mp3" type="audio/mp3">
     Audio not supported.
   </audio>
   <div id="errorMessage" class="error-message"></div>
-  <img src="wildcats_logo.png" class="wildcat-logo" alt="Wildcats Mascot" onerror="this.src='https://github.com/docaiduc/school-memories/blob/958abd9050e4e345123ed4f291dc466618ba5854/wildcats_logo.png';">
+  <img src="wildcats_logo.png" class="wildcat-logo" alt="Wildcats Mascot" onerror="this.src='https://via.placeholder.com/80?text=Wildcats';">
   <div class="slide" data-year="2016">
     <h1>Pre-K3 - 2016</h1>
-    <img src="images/image5.jpg" alt="Pre-K3 2016" data-filename="image5.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image1.JPG" alt="Pre-K3 2016" data-filename="image1.jpg">
     <p>Luke's first school adventure! Rocking Pre-K3 with a big smile!</p>
   </div>
   <div class="slide" data-year="2016">
     <h1>Pre-K3 - 2016</h1>
-    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image1.JPG" alt="Pre-K3 2016" data-filename="image1.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image2.jpg" alt="Pre-K3 2016" data-filename="image2.jpg">
     <p>Class comedian Luke's Aries spirit shines!</p>
   </div>
   <div class="slide" data-year="2016">
     <h1>Pre-K3 - 2016</h1>
-    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image2.jpg" alt="Pre-K3 2016" data-filename="image2.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image3.jpgg" alt="Pre-K3 2016" data-filename="image3.jpg">
     <p>Making friends and loving Pre-K3 fun!</p>
   </div>
   <div class="slide" data-year="2016">
     <h1>Pre-K3 - 2016</h1>
-    <img src="images/image3.jpg" alt="Pre-K3 2016" data-filename="image3.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image4.jpg" alt="Pre-K3 2016" data-filename="image4.jpg">
     <p>Luke's ready to roar with Wildcat spirit!</p>
   </div>
   <div class="slide" data-year="2017">
     <h1>Pre-K4 - 2017</h1>
-    <img src="images/image23.jpg" alt="Pre-K4 2017" data-filename="image23.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image5.jpg" alt="Pre-K4 2017" data-filename="image5.jpg">
     <p>Pre-K4 champ! Luke's all about flag football!</p>
   </div>
   <div class="slide" data-year="2017">
     <h1>Pre-K4 - 2017</h1>
-    <img src="images/image21.jpg" alt="Pre-K4 2017" data-filename="image21.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image6.jpg" alt="Pre-K4 2017" data-filename="image6.jpg">
     <p>Learning jujitsu and keeping everyone laughing!</p>
   </div>
   <div class="slide" data-year="2017">
     <h1>Pre-K4 - 2017</h1>
-    <img src="images/image7.jpg" alt="Pre-K4 2017" data-filename="image7.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image7.jpg" alt="Pre-K4 2017" data-filename="image7.jpg">
     <p>Wildcat pride as Luke rules Pre-K4!</p>
   </div>
   <div class="slide" data-year="2017">
     <h1>Pre-K4 - 2017</h1>
-    <img src="images/image16.jpg" alt="Pre-K4 2017" data-filename="image16.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image8.jpg" alt="Pre-K4 2017" data-filename="image8.jpg">
     <p>Bouncing with basketball dreams!</p>
   </div>
   <div class="slide" data-year="2017">
     <h1>Pre-K4 - 2017</h1>
-    <img src="images/image6.jpg" alt="Pre-K4 2017" data-filename="image6.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image9.jpg" alt="Pre-K4 2017" data-filename="image9.jpg">
     <p>Luke's happy vibes make every day epic!</p>
   </div>
   <div class="slide" data-year="2018">
     <h1>Kindergarten - 2018</h1>
-    <img src="images/image9.jpg" alt="Kindergarten 2018" data-filename="image9.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image10.jpg" alt="Kindergarten 2018" data-filename="image10.jpg">
     <p>Kindergarten king! Luke's all smiles!</p>
   </div>
   <div class="slide" data-year="2018">
     <h1>Kindergarten - 2018</h1>
-    <img src="images/image13.jpg" alt="Kindergarten 2018" data-filename="image13.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image11.jpg" alt="Kindergarten 2018" data-filename="image11.jpg">
     <p>Mastering judo with Wildcat spirit!</p>
   </div>
   <div class="slide" data-year="2018">
     <h1>Kindergarten - 2018</h1>
-    <img src="images/image18.jpg" alt="Kindergarten 2018" data-filename="image18.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image12.jpg" alt="Kindergarten 2018" data-filename="image12.jpg">
     <p>Luke's jokes light up the classroom!</p>
   </div>
   <div class="slide" data-year="2019">
     <h1>1st Grade - 2019</h1>
-    <img src="images/image2.jpg" alt="1st Grade 2019" data-filename="image2.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image13.jpg" alt="1st Grade 2019" data-filename="image13.jpg">
     <p>1st Grade superstar! Flag football fun!</p>
   </div>
   <div class="slide" data-year="2020">
     <h1>2nd Grade - 2020</h1>
-    <img src="images/image10.jpg" alt="2nd Grade 2020" data-filename="image10.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image14.jpg" alt="2nd Grade 2020" data-filename="image14.jpg">
     <p>Happiest Wildcat in 2nd Grade!</p>
   </div>
   <div class="slide" data-year="2020">
     <h1>2nd Grade - 2020</h1>
-    <img src="images/image17.jpg" alt="2nd Grade 2020" data-filename="image17.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image15.jpg" alt="2nd Grade 2020" data-filename="image15.jpg">
     <p>Shooting hoops and spreading smiles!</p>
   </div>
   <div class="slide" data-year="2020">
     <h1>2nd Grade - 2020</h1>
-    <img src="images/image14.jpg" alt="2nd Grade 2020" data-filename="image14.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image16.jpg" alt="2nd Grade 2020" data-filename="image16.jpg">
     <p>Luke's Aries energy keeps it buzzing!</p>
   </div>
   <div class="slide" data-year="2020">
     <h1>2nd Grade - 2020</h1>
-    <img src="images/image20.jpg" alt="2nd Grade 2020" data-filename="image20.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image17.jpg" alt="2nd Grade 2020" data-filename="image17.jpg">
     <p>Jujitsu moves and Wildcat pride!</p>
   </div>
   <div class="slide" data-year="2021">
     <h1>3rd Grade - 2021</h1>
-    <img src="images/image4.jpg" alt="3rd Grade 2021" data-filename="image4.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image18.jpg" alt="3rd Grade 2021" data-filename="image18.jpg">
     <p>3rd Grade with Luke's infectious laughter!</p>
   </div>
   <div class="slide" data-year="2022">
     <h1>4th Grade - 2022</h1>
-    <img src="images/image11.jpg" alt="4th Grade 2022" data-filename="image11.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image19.jpg" alt="4th Grade 2022" data-filename="image19.jpg">
     <p>4th Grade and dominating flag football!</p>
   </div>
   <div class="slide" data-year="2022">
     <h1>4th Grade - 2022</h1>
-    <img src="images/image22.jpg" alt="4th Grade 2022" data-filename="image22.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image20.jpg" alt="4th Grade 2022" data-filename="image20.jpg">
     <p>Luke's judo skills are leveling up!</p>
   </div>
   <div class="slide" data-year="2022">
     <h1>4th Grade - 2022</h1>
-    <img src="images/image8.jpg" alt="4th Grade 2022" data-filename="image8.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image21.jpg" alt="4th Grade 2022" data-filename="image21.jpg">
     <p>Always joking in 4th Grade!</p>
   </div>
   <div class="slide" data-year="2022">
     <h1>4th Grade - 2022</h1>
-    <img src="images/image15.jpg" alt="4th Grade 2022" data-filename="image15.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image22.jpg" alt="4th Grade 2022" data-filename="image22.jpg">
     <p>Basketball star in the making!</p>
   </div>
   <div class="slide" data-year="2023">
     <h1>5th Grade - 2023</h1>
-    <img src="images/image27.jpg" alt="5th Grade 2023" data-filename="image27.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image23.jpg" alt="5th Grade 2023" data-filename="image23.jpg">
     <p>5th Grade and Luke's the life of the party!</p>
   </div>
   <div class="slide" data-year="2023">
     <h1>5th Grade - 2023</h1>
-    <img src="images/image28.jpg" alt="5th Grade 2023" data-filename="image28.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image24.jpg" alt="5th Grade 2023" data-filename="image24.jpg">
     <p>Wildcat spirit and jujitsu flair!</p>
   </div>
   <div class="slide" data-year="2023">
     <h1>5th Grade - 2023</h1>
-    <img src="images/image24.jpg" alt="5th Grade 2023" data-filename="image24.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image25.jpg" alt="5th Grade 2023" data-filename="image25.jpg">
     <p>Smiling through 5th Grade challenges!</p>
   </div>
   <div class="slide" data-year="2023">
     <h1>5th Grade - 2023</h1>
-    <img src="images/image26.jpg" alt="5th Grade 2023" data-filename="image26.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image26.jpg" alt="5th Grade 2023" data-filename="image26.jpg">
     <p>Luke's basketball skills are slam-dunk!</p>
   </div>
   <div class="slide" data-year="2024">
     <h1>6th Grade - 2024</h1>
-    <img src="images/image30.jpg" alt="6th Grade 2024" data-filename="image30.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/image29.jpg" alt="6th Grade 2024" data-filename="image29.jpg">
     <p>6th Grade and Luke's ruling middle school!</p>
   </div>
   <div class="slide" data-year="2024">
     <h1>6th Grade - 2024</h1>
-    <img src="images/image29.jpg" alt="6th Grade 2024" data-filename="image29.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/227c68f8c806ea55d25d8a7a428994ccb7b7d329/Image26.jpg" alt="6th Grade 2024" data-filename="image26.jpg">
     <p>Flag football hero with a Wildcat heart!</p>
   </div>
   <div class="slide" data-year="2024">
     <h1>6th Grade - 2024</h1>
-    <img src="images/image25.jpg" alt="6th Grade 2024" data-filename="image25.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/20acd666112f399aa94938753337452d1d83e860/Image30.jpg" alt="6th Grade 2024" data-filename="image30.jpg">
     <p>Luke's jokes keep 6th Grade laughing!</p>
   </div>
   <div class="slide" data-year="2024">
     <h1>6th Grade - 2024</h1>
-    <img src="images/image25.jpg" alt="6th Grade 2024" data-filename="image25.jpg">
+    <img src="https://github.com/docaiduc/school-memories/blob/aa3764fbd08555e5970ba5a898c5db5734e0fb4c/image31.jpg" alt="6th Grade 2024" data-filename="image31.jpg">
     <p>Ending with a big Aries smile and Wildcat pride!</p>
   </div>
   <script>
