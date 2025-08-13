@@ -1,0 +1,327 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Back to School Memories - Luke</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+      overflow: hidden;
+    }
+    .slide {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: linear-gradient(45deg, #cc0000, #ffffff, #000000);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      animation: fadeIn 1s ease-in-out;
+    }
+    .slide.active {
+      display: flex;
+    }
+    .slide img {
+      max-width: 50%;
+      max-height: 50%;
+      border: 5px solid #cc0000;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+    .slide img.error {
+      background: #ccc;
+      color: #000;
+      font-size: 1em;
+      padding: 10px;
+      text-align: center;
+      width: 300px;
+      height: 200px;
+    }
+    .slide h1, .slide p {
+      color: #ffffff;
+      text-shadow: 2px 2px 4px #000000;
+    }
+    .slide h1 {
+      font-size: 2.5em;
+      margin: 0.5em;
+    }
+    .slide p {
+      font-size: 1.2em;
+      margin: 0.5em 2em;
+    }
+    .wildcat-logo {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 80px;
+      opacity: 0.8;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .error-message {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      background: #ff4444;
+      color: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      display: none;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <audio id="bgMusic" loop autoplay>
+    <source src="upbeat_music.mp3" type="audio/mp3">
+    Audio not supported.
+  </audio>
+  <div id="errorMessage" class="error-message"></div>
+  <img src="wildcats_logo.png" class="wildcat-logo" alt="Wildcats Mascot" onerror="this.src='https://via.placeholder.com/80?text=Wildcats';">
+  <div class="slide" data-year="2016">
+    <h1>Pre-K3 - 2016</h1>
+    <img src="images/image5.jpg" alt="Pre-K3 2016" data-filename="image5.jpg">
+    <p>Luke's first school adventure! Rocking Pre-K3 with a big smile!</p>
+  </div>
+  <div class="slide" data-year="2016">
+    <h1>Pre-K3 - 2016</h1>
+    <img src="images/image1.jpg" alt="Pre-K3 2016" data-filename="image1.jpg">
+    <p>Class comedian Luke's Aries spirit shines!</p>
+  </div>
+  <div class="slide" data-year="2016">
+    <h1>Pre-K3 - 2016</h1>
+    <img src="images/image19.jpg" alt="Pre-K3 2016" data-filename="image19.jpg">
+    <p>Making friends and loving Pre-K3 fun!</p>
+  </div>
+  <div class="slide" data-year="2016">
+    <h1>Pre-K3 - 2016</h1>
+    <img src="images/image3.jpg" alt="Pre-K3 2016" data-filename="image3.jpg">
+    <p>Luke's ready to roar with Wildcat spirit!</p>
+  </div>
+  <div class="slide" data-year="2017">
+    <h1>Pre-K4 - 2017</h1>
+    <img src="images/image23.jpg" alt="Pre-K4 2017" data-filename="image23.jpg">
+    <p>Pre-K4 champ! Luke's all about flag football!</p>
+  </div>
+  <div class="slide" data-year="2017">
+    <h1>Pre-K4 - 2017</h1>
+    <img src="images/image21.jpg" alt="Pre-K4 2017" data-filename="image21.jpg">
+    <p>Learning jujitsu and keeping everyone laughing!</p>
+  </div>
+  <div class="slide" data-year="2017">
+    <h1>Pre-K4 - 2017</h1>
+    <img src="images/image7.jpg" alt="Pre-K4 2017" data-filename="image7.jpg">
+    <p>Wildcat pride as Luke rules Pre-K4!</p>
+  </div>
+  <div class="slide" data-year="2017">
+    <h1>Pre-K4 - 2017</h1>
+    <img src="images/image16.jpg" alt="Pre-K4 2017" data-filename="image16.jpg">
+    <p>Bouncing with basketball dreams!</p>
+  </div>
+  <div class="slide" data-year="2017">
+    <h1>Pre-K4 - 2017</h1>
+    <img src="images/image6.jpg" alt="Pre-K4 2017" data-filename="image6.jpg">
+    <p>Luke's happy vibes make every day epic!</p>
+  </div>
+  <div class="slide" data-year="2018">
+    <h1>Kindergarten - 2018</h1>
+    <img src="images/image9.jpg" alt="Kindergarten 2018" data-filename="image9.jpg">
+    <p>Kindergarten king! Luke's all smiles!</p>
+  </div>
+  <div class="slide" data-year="2018">
+    <h1>Kindergarten - 2018</h1>
+    <img src="images/image13.jpg" alt="Kindergarten 2018" data-filename="image13.jpg">
+    <p>Mastering judo with Wildcat spirit!</p>
+  </div>
+  <div class="slide" data-year="2018">
+    <h1>Kindergarten - 2018</h1>
+    <img src="images/image18.jpg" alt="Kindergarten 2018" data-filename="image18.jpg">
+    <p>Luke's jokes light up the classroom!</p>
+  </div>
+  <div class="slide" data-year="2019">
+    <h1>1st Grade - 2019</h1>
+    <img src="images/image2.jpg" alt="1st Grade 2019" data-filename="image2.jpg">
+    <p>1st Grade superstar! Flag football fun!</p>
+  </div>
+  <div class="slide" data-year="2020">
+    <h1>2nd Grade - 2020</h1>
+    <img src="images/image10.jpg" alt="2nd Grade 2020" data-filename="image10.jpg">
+    <p>Happiest Wildcat in 2nd Grade!</p>
+  </div>
+  <div class="slide" data-year="2020">
+    <h1>2nd Grade - 2020</h1>
+    <img src="images/image17.jpg" alt="2nd Grade 2020" data-filename="image17.jpg">
+    <p>Shooting hoops and spreading smiles!</p>
+  </div>
+  <div class="slide" data-year="2020">
+    <h1>2nd Grade - 2020</h1>
+    <img src="images/image14.jpg" alt="2nd Grade 2020" data-filename="image14.jpg">
+    <p>Luke's Aries energy keeps it buzzing!</p>
+  </div>
+  <div class="slide" data-year="2020">
+    <h1>2nd Grade - 2020</h1>
+    <img src="images/image20.jpg" alt="2nd Grade 2020" data-filename="image20.jpg">
+    <p>Jujitsu moves and Wildcat pride!</p>
+  </div>
+  <div class="slide" data-year="2021">
+    <h1>3rd Grade - 2021</h1>
+    <img src="images/image4.jpg" alt="3rd Grade 2021" data-filename="image4.jpg">
+    <p>3rd Grade with Luke's infectious laughter!</p>
+  </div>
+  <div class="slide" data-year="2022">
+    <h1>4th Grade - 2022</h1>
+    <img src="images/image11.jpg" alt="4th Grade 2022" data-filename="image11.jpg">
+    <p>4th Grade and dominating flag football!</p>
+  </div>
+  <div class="slide" data-year="2022">
+    <h1>4th Grade - 2022</h1>
+    <img src="images/image22.jpg" alt="4th Grade 2022" data-filename="image22.jpg">
+    <p>Luke's judo skills are leveling up!</p>
+  </div>
+  <div class="slide" data-year="2022">
+    <h1>4th Grade - 2022</h1>
+    <img src="images/image8.jpg" alt="4th Grade 2022" data-filename="image8.jpg">
+    <p>Always joking in 4th Grade!</p>
+  </div>
+  <div class="slide" data-year="2022">
+    <h1>4th Grade - 2022</h1>
+    <img src="images/image15.jpg" alt="4th Grade 2022" data-filename="image15.jpg">
+    <p>Basketball star in the making!</p>
+  </div>
+  <div class="slide" data-year="2023">
+    <h1>5th Grade - 2023</h1>
+    <img src="images/image27.jpg" alt="5th Grade 2023" data-filename="image27.jpg">
+    <p>5th Grade and Luke's the life of the party!</p>
+  </div>
+  <div class="slide" data-year="2023">
+    <h1>5th Grade - 2023</h1>
+    <img src="images/image28.jpg" alt="5th Grade 2023" data-filename="image28.jpg">
+    <p>Wildcat spirit and jujitsu flair!</p>
+  </div>
+  <div class="slide" data-year="2023">
+    <h1>5th Grade - 2023</h1>
+    <img src="images/image24.jpg" alt="5th Grade 2023" data-filename="image24.jpg">
+    <p>Smiling through 5th Grade challenges!</p>
+  </div>
+  <div class="slide" data-year="2023">
+    <h1>5th Grade - 2023</h1>
+    <img src="images/image26.jpg" alt="5th Grade 2023" data-filename="image26.jpg">
+    <p>Luke's basketball skills are slam-dunk!</p>
+  </div>
+  <div class="slide" data-year="2024">
+    <h1>6th Grade - 2024</h1>
+    <img src="images/image30.jpg" alt="6th Grade 2024" data-filename="image30.jpg">
+    <p>6th Grade and Luke's ruling middle school!</p>
+  </div>
+  <div class="slide" data-year="2024">
+    <h1>6th Grade - 2024</h1>
+    <img src="images/image29.jpg" alt="6th Grade 2024" data-filename="image29.jpg">
+    <p>Flag football hero with a Wildcat heart!</p>
+  </div>
+  <div class="slide" data-year="2024">
+    <h1>6th Grade - 2024</h1>
+    <img src="images/image25.jpg" alt="6th Grade 2024" data-filename="image25.jpg">
+    <p>Luke's jokes keep 6th Grade laughing!</p>
+  </div>
+  <div class="slide" data-year="2024">
+    <h1>6th Grade - 2024</h1>
+    <img src="images/image25.jpg" alt="6th Grade 2024" data-filename="image25.jpg">
+    <p>Ending with a big Aries smile and Wildcat pride!</p>
+  </div>
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const errorMessage = document.getElementById('errorMessage');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    if (slides.length > 0) {
+      showSlide(currentSlide);
+      setInterval(nextSlide, 5000);
+    } else {
+      console.error('No slides found in the document.');
+      errorMessage.textContent = 'Error: No slides found.';
+      errorMessage.style.display = 'block';
+    }
+
+    const images = document.querySelectorAll('.slide img');
+    images.forEach(img => {
+      img.addEventListener('error', () => {
+        console.error(`Failed to load image: ${img.src} (Expected: ${img.dataset.filename})`);
+        img.classList.add('error');
+        img.src = 'https://via.placeholder.com/300x200?text=Image+Missing';
+        errorMessage.textContent = `Failed to load image: ${img.dataset.filename}`;
+        errorMessage.style.display = 'block';
+        setTimeout(() => { errorMessage.style.display = 'none'; }, 3000);
+      });
+    });
+
+    const audio = document.getElementById('bgMusic');
+    audio.addEventListener('error', () => {
+      console.error('Audio failed to load. Check if upbeat_music.mp3 exists.');
+      errorMessage.textContent = 'Audio failed to load. Check upbeat_music.mp3.';
+      errorMessage.style.display = 'block';
+      setTimeout(() => { errorMessage.style.display = 'none'; }, 3000);
+    });
+  </script>
+</body>
+</html>
